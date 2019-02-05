@@ -4,3 +4,15 @@ body{
     background-repeat: no-repeat;
     background-size:cover;
 }
+#center{
+    position: absolute;
+    left:50%;
+    margin-left:-300px;
+    margin-top: 100px;
+
+}
+button{border:0px;padding: 5px;}
+#startButton{
+    color: black;
+    background-color: rgb(255, 0, 0);
+}
