@@ -11,5 +11,4 @@ function changingColor(or,og,ob){
 
     
 }
-setTimeout{,5000}
  
