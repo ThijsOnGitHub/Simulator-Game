@@ -3,15 +3,13 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     background-repeat: no-repeat;
     background-size:cover;
-    /*position: absolute;*/
-    style="margin: 0px; 
-    width: 100%"
+    width: 100%;
 }
-.center{
-    
+.centerbox{
+    text-align: center;
 }
-button{border:0px;padding: 5px;}
-#startButton{
-    color: black;
-    background-color: rgb(255, 0, 0);
+#logo{
+    width: 600px;
+    margin: 0px auto;
 }
+
