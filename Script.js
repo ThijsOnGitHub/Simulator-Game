@@ -12,7 +12,9 @@ startButton.addEventListener("click",function(){
     show.style.display="block"
     startGame()
 }) ;
+//the game
 
+var wachtrij=[[50,60],[100,60],[100,120],[150,120]]
 
 function mensenSpawn(id){
     skins=["Geel","Groen","Oranje","Rood"]
@@ -26,11 +28,13 @@ function mensenSpawn(id){
     persoon.style.top=10
     mensen.appendChild(persoon,naam)
     walk(persoon,naam)
-    setTimeout(mensenSpawn,randomInt(1000,5000),id++)
+    setTimeout(mensenSpawn,/*randomInt(1000,5000)*/10,id++)
 }
 
 function walk(naam,id){
     var walkLoop=[]
+    naam.style.left=wachtrij[0][0]
+    naam.style.top=wachtrij[0][1]
     walkLoop[id]=setInterval(function(){
         naam.style.left=Number(naam.style.left.replace("px",""))+1
         if(Number(naam.style.left.replace("px",""))+25>500){
@@ -47,16 +51,35 @@ function maakWachtrij(breedte,positieLijst){
         console.log(posities)
         var rij=document.createElement("div")
         rij.id=index
-        rij.style.top= posities[0][1]
-        rij.style.left= posities[0][0]
+        rij.style.top= posities[0][1]-10
+        rij.style.left= posities[0][0]+5
         rij.style.width= posities[1][0]-posities[0][0]+breedte //+(breedte*  (posities[1][0]==posities[0][0]?1 : 2 ))
         rij.style.height=posities[1][1]-posities[0][1]+breedte //+(breedte*  (posities[1][0]==posities[0][0]?2 : 1 ))
         wachtrijen.appendChild(rij)
     }
 }
 
+
+function maakXYLijst(actielijst,begin){
+    var nieuweLijst=[begin]
+    for (let index = 0; index < actielijst.length; index++) {
+        if (actielijst[index-1]==undefined){
+            vorigItem=begin
+        }else{
+            vorigItem=nieuweLijst[nieuweLijst.length-1]
+        }
+        console.log(vorigItem)
+        actie=actielijst[index]
+        nieuweX=vorigItem[0]+actie[0]
+        nieuweY=vorigItem[1]+actie[1]
+        nieuweLijst.push([nieuweX,nieuweY])
+    }
+    return nieuweLijst
+}
+wachtrij=maakXYLijst([[70,0],[0,40]],[20,40])
+
 function startGame(){
     mensenSpawn(0)
-    maakWachtrij(30,)
+    maakWachtrij(40,wachtrij)
 }
 startGame()
