@@ -35,6 +35,27 @@ body{
     background-color: rgb(56, 149, 255);
 }
 
-speelVeld{
-    
+.speelVeld {
+    position: relative;
 }
+#speelveld{
+    margin:100 auto;
+    width: 500px;
+    height: 500px ;
+    background-color:rgb(255, 255, 255);
+}
+
+#wachtrij{
+    position: relative;
+    top:30;
+    left:30;
+    background-color: black;
+    width: 400;
+    height: 30;
+}
+.mensen img{
+    position: relative;
+}
+::-webkit-scrollbar{ 
+    width: 0px
+  }

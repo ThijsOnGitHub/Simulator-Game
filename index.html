@@ -4,7 +4,7 @@
     </head>
     <body>
         <!-- Het begin-->
-        <div class="centerbox " id="disapear">
+        <div class="centerbox " id="disapear" style="display: none">
             <img width="600" src="imgs/Logo.png" >
             <div class="button" id=startKnop>
                 <a >Klik om te gaan spelen!</a>
@@ -13,9 +13,10 @@
 
         <!--The game!!!-->
 
-        <div>
-            <div class="speelveld" id="hetSpeelveld">
-
+        <div id="show" style="display: block">
+            <div class="speelveld" id="speelveld">
+                <div id="wachtrij"></div>
+                <div id="mensen" class="mensen"></div>
             </div>
         </div>
 
