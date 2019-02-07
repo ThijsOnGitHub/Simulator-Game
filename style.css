@@ -6,10 +6,35 @@ body{
     width: 100%;
 }
 .centerbox{
+    margin-top: 40px;
     text-align: center;
 }
 #logo{
     width: 600px;
     margin: 0px auto;
 }
+.button{
+    font-size: 20px;
+    background-color: rgb(0, 119, 255);
+    width: fit-content;
+    padding: 20px;
+    border-radius: 4px;
+    margin: 0 auto;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    
 
+}
+
+.button a{
+    text-decoration: none;
+    color:black;
+
+}
+.button:hover{
+    background-color: rgb(56, 149, 255);
+}
+
+speelVeld{
+    
+}

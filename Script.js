@@ -1,14 +1,10 @@
-var startButton=document.getElementById("startButton")
-
+var startButton=document.getElementById("startKnop")
+var disapear=document.getElementById("disapear")
 
 function randomInt(min,max) {
     return Math.floor(Math.random()*((max+1)-min))+min
-}
-function changingColor(or,og,ob){
-    r= randomInt(0,255)
-    g= randomInt(0,255)
-    b= randomInt(0,255)
+};
 
-    
-}
- 
+startButton.addEventListener("click",function(){
+    disapear.style.display="none"
+}) ;
