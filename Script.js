@@ -14,7 +14,7 @@ startButton.addEventListener("click",function(){
 }) ;
 //the game
 
-var wachtrij=[[50,60],[100,60],[100,120],[150,120]]
+var wachtrij=maakXYLijst([[70,0],[0,50]],[20,40])
 
 function mensenSpawn(id){
     skins=["Geel","Groen","Oranje","Rood"]
@@ -37,6 +37,7 @@ function walk(naam,id){
     naam.style.top=wachtrij[0][1]
     walkLoop[id]=setInterval(function(){
         naam.style.left=Number(naam.style.left.replace("px",""))+1
+        
         if(Number(naam.style.left.replace("px",""))+25>500){
             mensen.removeChild(naam)
             clearInterval(walkLoop[id])
@@ -76,7 +77,7 @@ function maakXYLijst(actielijst,begin){
     }
     return nieuweLijst
 }
-wachtrij=maakXYLijst([[70,0],[0,40]],[20,40])
+
 
 function startGame(){
     mensenSpawn(0)
