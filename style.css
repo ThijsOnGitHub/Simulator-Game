@@ -47,8 +47,8 @@ body{
 
 .wachtrij div{
     position: absolute;
-    background-color: rgb(255, 0, 0);
-    border: black solid 2px;
+    background-color: rgb(255, 102, 0);
+    /*border: black solid 2px;*/
 }
 .mensen img{
     position: relative;

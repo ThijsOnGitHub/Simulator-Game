@@ -47,16 +47,16 @@ function maakWachtrij(breedte,positieLijst){
         console.log(posities)
         var rij=document.createElement("div")
         rij.id=index
-        rij.style.top= posities[0][1]-breedte
+        rij.style.top= posities[0][1]
         rij.style.left= posities[0][0]
-        rij.style.width= posities[1][0]-posities[0][0]+(breedte*  (posities[1][0]==posities[0][0]?1 : 2 ))
-        rij.style.height=posities[1][1]-posities[0][1]+(breedte*  (posities[1][0]==posities[0][0]?2 : 1 ))
+        rij.style.width= posities[1][0]-posities[0][0]+breedte //+(breedte*  (posities[1][0]==posities[0][0]?1 : 2 ))
+        rij.style.height=posities[1][1]-posities[0][1]+breedte //+(breedte*  (posities[1][0]==posities[0][0]?2 : 1 ))
         wachtrijen.appendChild(rij)
     }
 }
 
 function startGame(){
     mensenSpawn(0)
-    maakWachtrij(30,[[50,60],[100,60],[100,120],[150,120]])
+    maakWachtrij(30,)
 }
 startGame()
