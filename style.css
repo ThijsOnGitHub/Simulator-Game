@@ -45,13 +45,10 @@ body{
     background-color:rgb(255, 255, 255);
 }
 
-#wachtrij{
-    position: relative;
-    top:30;
-    left:30;
-    background-color: black;
-    width: 400;
-    height: 30;
+.wachtrij div{
+    position: absolute;
+    background-color: rgb(255, 0, 0);
+    border: black solid 2px;
 }
 .mensen img{
     position: relative;
