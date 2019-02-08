@@ -107,18 +107,6 @@ function maakWachtrij(breedte,positieLijst){
             rij.style.top= posities[0][1]-10//+(posities[1][0]==posities[0][0]? 10: 0 )
         }
 
-
-
-
-        /*
-        if (positieLijst[index][index1of2()]>positieLijst[index+1][index1of2()]) {
-            rij.style.top= posities[0][1]-10//+(posities[1][0]==posities[0][0]? 10: 0 )
-            rij.style.left= posities[0][0]-5//+(posities[1][0]==posities[0][0]? 0 : 10 )
-        }else{
-            rij.style.top= posities[0][1]-10//+(posities[1][0]==posities[0][0]? 10: 0 )
-            rij.style.left= posities[0][0]-5//+(posities[1][0]==posities[0][0]? 0 : 10 )
-        }
-        */
         rij.style.width= posities[1][0]-posities[0][0]+(posities[1][0]==posities[0][0]? breedte : 0 )
         rij.style.height=posities[1][1]-posities[0][1]+(posities[1][0]==posities[0][0]? 0 : breedte)
         wachtrijen.appendChild(rij)
