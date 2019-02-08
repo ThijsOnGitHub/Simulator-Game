@@ -16,7 +16,7 @@ startButton.addEventListener("click",function(){
 
 
 var startWachtrij=[20,40]
-var wachtrijInstructies=[[80,0],[0,100]]
+var wachtrijInstructies=[[80,0],[0,100],[100,0],[0,49]]
 var wachtrij=maakXYLijst(wachtrijInstructies,startWachtrij)
 
 function mensenSpawn(id,startwachtrij,wachtrijInstructies){
@@ -31,7 +31,7 @@ function mensenSpawn(id,startwachtrij,wachtrijInstructies){
     persoon.style.top=startWachtrij[1]
     mensen.appendChild(persoon)
     walk(persoon,naam,wachtrijInstructies)
-    setTimeout(mensenSpawn,randomInt(1000,5000),id++,startwachtrij,wachtrijInstructies)
+    setTimeout(mensenSpawn,/*randomInt(1000,5000)*/500,id++,startwachtrij,wachtrijInstructies)
 }
 
 function walk(naam,id,wachtrijInstructiesAll){
@@ -43,6 +43,7 @@ function walk(naam,id,wachtrijInstructiesAll){
     console.log(wachtrijInstructies)
     walkLoop[id]=setInterval(function(wachtrijInstructies){
         if (wachtrijInstructies.length==0){
+            mensen.removeChild(naam)
             clearInterval(walkLoop[id])
         }
         instructie = wachtrijInstructies[0]
@@ -50,26 +51,26 @@ function walk(naam,id,wachtrijInstructiesAll){
         instructie = wachtrijInstructies[0]
         if(instructie[0]==0 && instructie[1]==0){
             wachtrijInstructies.shift()
-            naam.style.transform= "rotate(180deg)"
+            
         }else if(instructie[0]>0 && instructie[1]==0){
             naam.style.left=Number(naam.style.left.replace("px",""))+1
             instructie[0]-=1
+            naam.style.transform= "rotate(90deg)"
         }else if (instructie[0]<0 && instructie[1]==0){
             naam.style.left=Number(naam.style.left.replace("px",""))-1
             instructie[0]+=1
+            naam.style.transform= "rotate(90deg)"
         }else if (instructie[0]==0 && instructie[1]>0){
             naam.style.top=Number(naam.style.top.replace("px",""))+1
             instructie[1]-=1
+            naam.style.transform= "rotate(180deg)"
         }else if (instructie[0]==0 && instructie[1]<0){
             naam.style.top=Number(naam.style.top.replace("px",""))-1
             instructie[1]+=1
+            naam.style.transform= "rotate(180deg)"
         }
         //naam.style.left=Number(naam.style.left.replace("px",""))+1
 
-        if(Number(naam.style.left.replace("px",""))+25>500){
-            mensen.removeChild(naam)
-            clearInterval(walkLoop[id])
-        }
     },10,wachtrijInstructies)
 }
 
@@ -79,10 +80,10 @@ function maakWachtrij(breedte,positieLijst){
         var posities=[positieLijst[index]].concat([positieLijst[index+1]]).sort(function(a,b){if(a[0]==b[0]){return a[1]-b[1]}else{return a[0]-b[0]}})
         var rij=document.createElement("div")
         rij.id=index
-        rij.style.top= posities[0][1]-10
-        rij.style.left= posities[0][0]-5
-        rij.style.width= posities[1][0]-posities[0][0]+breedte //+(breedte*  (posities[1][0]==posities[0][0]?1 : 2 ))
-        rij.style.height=posities[1][1]-posities[0][1]+breedte //+(breedte*  (posities[1][0]==posities[0][0]?2 : 1 ))
+        rij.style.top= posities[0][1]-10//+(posities[1][0]==posities[0][0]? 10: 0 )
+        rij.style.left= posities[0][0]-5//+(posities[1][0]==posities[0][0]? 0 : 10 )
+        rij.style.width= posities[1][0]-posities[0][0]+(posities[1][0]==posities[0][0]? breedte : 0 )
+        rij.style.height=posities[1][1]-posities[0][1]+(posities[1][0]==posities[0][0]? 0 : breedte)
         wachtrijen.appendChild(rij)
     }
 }
