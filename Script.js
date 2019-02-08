@@ -16,7 +16,7 @@ startButton.addEventListener("click",function(){
 
 
 var startWachtrij=[20,40]
-var wachtrijInstructies=[[70,0],[0,70]]
+var wachtrijInstructies=[[80,0],[0,100]]
 var wachtrij=maakXYLijst(wachtrijInstructies,startWachtrij)
 
 function mensenSpawn(id,startwachtrij,wachtrijInstructies){
@@ -30,43 +30,57 @@ function mensenSpawn(id,startwachtrij,wachtrijInstructies){
     persoon.style.left=startWachtrij[0]
     persoon.style.top=startWachtrij[1]
     mensen.appendChild(persoon)
-    walk(persoon,naam,startwachtrij,wachtrijInstructies)
-    setTimeout(mensenSpawn,randomInt(1000,5000),id++)
+    walk(persoon,naam,wachtrijInstructies)
+    setTimeout(mensenSpawn,randomInt(1000,5000),id++,startwachtrij,wachtrijInstructies)
 }
 
-function walk(naam,id,wachtrijInstructies){
+function walk(naam,id,wachtrijInstructiesAll){
     var walkLoop=[]
+    var wachtrijInstructies= JSON.parse(JSON.stringify(wachtrijInstructiesAll))
+
     naam.style.left=wachtrij[0][0]
     naam.style.top=wachtrij[0][1]
-    walkLoop[id]=setInterval(function(){
-        /*
-        instructie=wachtrijInstructies[1]
-
-        if (instructie[0]==0 && instructie[1]==0){
-            wachtrijInstructies=wachtrijInstructies.slice()
-        }else{
-            wachtrijInstructies=wachtrijInstructies.slice(1,wachtrijInstructies.length)
-            console.log(wachtrijInstructies)
+    console.log(wachtrijInstructies)
+    walkLoop[id]=setInterval(function(wachtrijInstructies){
+        if (wachtrijInstructies.length==0){
+            clearInterval(walkLoop[id])
         }
-        */
-        naam.style.left=Number(naam.style.left.replace("px",""))+1
-
+        instructie = wachtrijInstructies[0]
+        console.log(instructie)
+        instructie = wachtrijInstructies[0]
+        if(instructie[0]==0 && instructie[1]==0){
+            wachtrijInstructies.shift()
+            naam.style.transform= "rotate(180deg)"
+        }else if(instructie[0]>0 && instructie[1]==0){
+            naam.style.left=Number(naam.style.left.replace("px",""))+1
+            instructie[0]-=1
+        }else if (instructie[0]<0 && instructie[1]==0){
+            naam.style.left=Number(naam.style.left.replace("px",""))-1
+            instructie[0]+=1
+        }else if (instructie[0]==0 && instructie[1]>0){
+            naam.style.top=Number(naam.style.top.replace("px",""))+1
+            instructie[1]-=1
+        }else if (instructie[0]==0 && instructie[1]<0){
+            naam.style.top=Number(naam.style.top.replace("px",""))-1
+            instructie[1]+=1
+        }
+        //naam.style.left=Number(naam.style.left.replace("px",""))+1
 
         if(Number(naam.style.left.replace("px",""))+25>500){
             mensen.removeChild(naam)
             clearInterval(walkLoop[id])
         }
-
-    },10)
+    },10,wachtrijInstructies)
 }
+
 // positielijst in de vorm [[x,y],[x,y]]
 function maakWachtrij(breedte,positieLijst){
-    for (let index = 0; index < positieLijst.length-1; index++) {
+   for (let index = 0; index < positieLijst.length-1; index++) {
         var posities=[positieLijst[index]].concat([positieLijst[index+1]]).sort(function(a,b){if(a[0]==b[0]){return a[1]-b[1]}else{return a[0]-b[0]}})
         var rij=document.createElement("div")
         rij.id=index
         rij.style.top= posities[0][1]-10
-        rij.style.left= posities[0][0]+5
+        rij.style.left= posities[0][0]-5
         rij.style.width= posities[1][0]-posities[0][0]+breedte //+(breedte*  (posities[1][0]==posities[0][0]?1 : 2 ))
         rij.style.height=posities[1][1]-posities[0][1]+breedte //+(breedte*  (posities[1][0]==posities[0][0]?2 : 1 ))
         wachtrijen.appendChild(rij)
@@ -80,7 +94,7 @@ function maakXYLijst(actielijst,begin){
         if (actielijst[index-1]==undefined){
             vorigItem=begin
         }else{
-            vorigItem=actielijst[index-1]
+            vorigItem=nieuweLijst[nieuweLijst.length-1]
         }
         var actie=actielijst[index]
         var nieuweX=vorigItem[0]+actie[0]
