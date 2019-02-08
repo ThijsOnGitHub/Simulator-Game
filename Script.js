@@ -17,7 +17,7 @@ startButton.addEventListener("click",function(){
 
 var startWachtrij=[20,40]
 //var wachtrijInstructies=[[80,0],[0,100],[100,0],[0,49]]
-var wachtrijInstructies=[[200,0],[00,80],[-40,0]]
+var wachtrijInstructies=[[200,0],[00,80],[-60,0],[0,80],[120,0],[0,-100],[60,0]]
 var wachtrij=maakXYLijst(wachtrijInstructies,startWachtrij)
 
 function mensenSpawn(id,startwachtrij,wachtrijInstructies){
@@ -89,8 +89,36 @@ function maakWachtrij(breedte,positieLijst){
         var posities=[positieLijst[index]].concat([positieLijst[index+1]]).sort(function(a,b){if(a[0]==b[0]){return a[1]-b[1]}else{return a[0]-b[0]}})
         var rij=document.createElement("div")
         rij.id=index
-        rij.style.top= posities[0][1]-10//+(posities[1][0]==posities[0][0]? 10: 0 )
-        rij.style.left= posities[0][0]-5//+(posities[1][0]==posities[0][0]? 0 : 10 )
+        function index1of2(a,b){
+            a=positieLijst[index]
+            b=positieLijst[index+1]
+            if(a[0]==b[0]){return 1}else{return 0}
+        }
+        if (positieLijst[index][0]>positieLijst[index+1][0]) {
+            rij.style.left= posities[0][0]-5+40
+        }else{
+            rij.style.left= posities[0][0]-5//+(posities[1][0]==posities[0][0]? 0 : 10 )
+        }
+        
+        if (positieLijst[index][1]>positieLijst[index+1][1]) {
+            rij.style.top= posities[0][1]-10+40
+
+        }else{
+            rij.style.top= posities[0][1]-10//+(posities[1][0]==posities[0][0]? 10: 0 )
+        }
+
+
+
+
+        /*
+        if (positieLijst[index][index1of2()]>positieLijst[index+1][index1of2()]) {
+            rij.style.top= posities[0][1]-10//+(posities[1][0]==posities[0][0]? 10: 0 )
+            rij.style.left= posities[0][0]-5//+(posities[1][0]==posities[0][0]? 0 : 10 )
+        }else{
+            rij.style.top= posities[0][1]-10//+(posities[1][0]==posities[0][0]? 10: 0 )
+            rij.style.left= posities[0][0]-5//+(posities[1][0]==posities[0][0]? 0 : 10 )
+        }
+        */
         rij.style.width= posities[1][0]-posities[0][0]+(posities[1][0]==posities[0][0]? breedte : 0 )
         rij.style.height=posities[1][1]-posities[0][1]+(posities[1][0]==posities[0][0]? 0 : breedte)
         wachtrijen.appendChild(rij)
