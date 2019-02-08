@@ -16,7 +16,8 @@ startButton.addEventListener("click",function(){
 
 
 var startWachtrij=[20,40]
-var wachtrijInstructies=[[80,0],[0,100],[100,0],[0,49]]
+//var wachtrijInstructies=[[80,0],[0,100],[100,0],[0,49]]
+var wachtrijInstructies=[[200,0],[00,80],[-40,0]]
 var wachtrij=maakXYLijst(wachtrijInstructies,startWachtrij)
 
 function mensenSpawn(id,startwachtrij,wachtrijInstructies){
@@ -25,7 +26,6 @@ function mensenSpawn(id,startwachtrij,wachtrijInstructies){
     naam="persoon"+toString(id)
     persoon.id=naam
     persoon.src="./imgs/Poppetje "+skins[randomInt(0,3)]+".png"
-    persoon.style.transform="rotate(90deg)"
     persoon.style.position="absolute"
     persoon.style.left=startWachtrij[0]
     persoon.style.top=startWachtrij[1]
@@ -37,15 +37,21 @@ function mensenSpawn(id,startwachtrij,wachtrijInstructies){
 function walk(naam,id,wachtrijInstructiesAll){
     var walkLoop=[]
     var wachtrijInstructies= JSON.parse(JSON.stringify(wachtrijInstructiesAll))
+    if (wachtrijInstructies[0][0]==0){
+        wachtrijInstructies[0][1]+=10
+        naam.style.top=wachtrij[0][1]-10
+    }else{
+        wachtrijInstructies[0][0]+=10
+        naam.style.left=wachtrij[0][0]-10
+    }
 
-    naam.style.left=wachtrij[0][0]
-    naam.style.top=wachtrij[0][1]
-    console.log(wachtrijInstructies)
+    if (wachtrijInstructies[wachtrijInstructies.length-1][0]==0){
+        wachtrijInstructies[wachtrijInstructies.length-1][1]-=10
+    }else{
+        wachtrijInstructies[wachtrijInstructies.length-1][0]-=10
+    }
     walkLoop[id]=setInterval(function(wachtrijInstructies){
-        if (wachtrijInstructies.length==0){
-            mensen.removeChild(naam)
-            clearInterval(walkLoop[id])
-        }
+
         instructie = wachtrijInstructies[0]
         console.log(instructie)
         instructie = wachtrijInstructies[0]
@@ -69,7 +75,10 @@ function walk(naam,id,wachtrijInstructiesAll){
             instructie[1]+=1
             naam.style.transform= "rotate(180deg)"
         }
-        //naam.style.left=Number(naam.style.left.replace("px",""))+1
+        if (wachtrijInstructies.length==0){
+            mensen.removeChild(naam)
+            clearInterval(walkLoop[id])
+        }
 
     },10,wachtrijInstructies)
 }
