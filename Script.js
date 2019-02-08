@@ -20,21 +20,51 @@ var startWachtrij=[20,40]
 var wachtrijInstructies=[[200,0],[00,80],[-60,0],[0,80],[120,0],[0,-100],[60,0]]
 var wachtrij=maakXYLijst(wachtrijInstructies,startWachtrij)
 
+function lengteWachtrij(instructiesAll){
+    var lengte = 0 
+    var Instructies = JSON.parse(JSON.stringify(instructiesAll))
+    for (let index = 0; index < Instructies.length; index++) {
+        if(Instructies[index][0]==0){
+            lengte+=Instructies[index][1]
+        }else{
+            lengte+=Instructies[index][0]
+        }
+    }
+    return lengte
+}
+
+var wachtrijLengte=lengteWachtrij(wachtrijInstructies)
+console.log(wachtrijLengte)
+var mensenDICT={}
+
 function mensenSpawn(id,startwachtrij,wachtrijInstructies){
     skins=["Geel","Groen","Oranje","Rood"]
     var persoon=document.createElement("img")
-    naam="persoon"+toString(id)
+    naam="persoon"+id.toString()
     persoon.id=naam
     persoon.src="./imgs/Poppetje "+skins[randomInt(0,3)]+".png"
     persoon.style.position="absolute"
     persoon.style.left=startWachtrij[0]
     persoon.style.top=startWachtrij[1]
+
+    mensenDICT[id]={"afstandLopen":0,"afstandGelopen":0}
+    if (mensenDICT[id-1]==undefined){
+        mensenDICT[id]["afstandLopen"]=wachtrijLengte
+    }else{
+        mensenDICT[id]["afstandLopen"]=mensenDICT[id-1]["afstandLopen"]-25
+    }
+    mensenDICT[id]["afstandGelopen"]=0
+
     mensen.appendChild(persoon)
-    walk(persoon,naam,wachtrijInstructies)
-    setTimeout(mensenSpawn,/*randomInt(1000,5000)*/500,id++,startwachtrij,wachtrijInstructies)
+    walk(persoon,naam,wachtrijInstructies,id)
+    setTimeout(mensenSpawn,randomInt(1000,5000),id+1,startwachtrij,wachtrijInstructies)
 }
 
-function walk(naam,id,wachtrijInstructiesAll){
+function idMeer(id,aantal){
+    return Number(id.replace("persoon",""))+aantal
+}
+
+function walk(naam,id,wachtrijInstructiesAll,nummerID){
     var walkLoop=[]
     var wachtrijInstructies= JSON.parse(JSON.stringify(wachtrijInstructiesAll))
     if (wachtrijInstructies[0][0]==0){
@@ -51,14 +81,18 @@ function walk(naam,id,wachtrijInstructiesAll){
         wachtrijInstructies[wachtrijInstructies.length-1][0]-=10
     }
     walkLoop[id]=setInterval(function(wachtrijInstructies){
+        instructie = wachtrijInstructies[0]
 
-        instructie = wachtrijInstructies[0]
-        console.log(instructie)
-        instructie = wachtrijInstructies[0]
-        if(instructie[0]==0 && instructie[1]==0){
-            wachtrijInstructies.shift()
-            
-        }else if(instructie[0]>0 && instructie[1]==0){
+        if (mensenDICT[nummerID-1]==undefined){
+            mensenDICT[nummerID]["afstandLopen"]=wachtrijLengte
+        }else{
+            mensenDICT[nummerID]["afstandLopen"]=mensenDICT[nummerID-1]["afstandLopen"]-25
+        }
+
+        if(mensenDICT[nummerID]["afstandGelopen"]!=mensenDICT[nummerID]["afstandLopen"]){
+        
+
+        if(instructie[0]>0 && instructie[1]==0){
             naam.style.left=Number(naam.style.left.replace("px",""))+1
             instructie[0]-=1
             naam.style.transform= "rotate(90deg)"
@@ -75,13 +109,28 @@ function walk(naam,id,wachtrijInstructiesAll){
             instructie[1]+=1
             naam.style.transform= "rotate(180deg)"
         }
+
+        mensenDICT[nummerID]["afstandGelopen"]+=1
+    }
+        
+
+        if(instructie[0]==0 && instructie[1]==0){
+            wachtrijInstructies.shift()
+            delete mensen[id]
+        }
         if (wachtrijInstructies.length==0){
             mensen.removeChild(naam)
             clearInterval(walkLoop[id])
         }
 
+
+
     },10,wachtrijInstructies)
 }
+
+
+
+
 
 // positielijst in de vorm [[x,y],[x,y]]
 function maakWachtrij(breedte,positieLijst){
