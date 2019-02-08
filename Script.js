@@ -25,9 +25,9 @@ function lengteWachtrij(instructiesAll){
     var Instructies = JSON.parse(JSON.stringify(instructiesAll))
     for (let index = 0; index < Instructies.length; index++) {
         if(Instructies[index][0]==0){
-            lengte+=Instructies[index][1]
+            lengte+=Math.abs( Instructies[index][1])
         }else{
-            lengte+=Instructies[index][0]
+            lengte+=Math.abs( Instructies[index][0])
         }
     }
     return lengte
@@ -49,7 +49,7 @@ function mensenSpawn(id,startwachtrij,wachtrijInstructies){
 
     mensenDICT[id]={"afstandLopen":0,"afstandGelopen":0}
     if (mensenDICT[id-1]==undefined){
-        mensenDICT[id]["afstandLopen"]=wachtrijLengte
+        mensenDICT[id]["afstandLopen"]=wachtrijLengte-25
     }else{
         mensenDICT[id]["afstandLopen"]=mensenDICT[id-1]["afstandLopen"]-25
     }
@@ -84,41 +84,39 @@ function walk(naam,id,wachtrijInstructiesAll,nummerID){
         instructie = wachtrijInstructies[0]
 
         if (mensenDICT[nummerID-1]==undefined){
-            mensenDICT[nummerID]["afstandLopen"]=wachtrijLengte
+            mensenDICT[nummerID]["afstandLopen"]=wachtrijLengte-25
         }else{
             mensenDICT[nummerID]["afstandLopen"]=mensenDICT[nummerID-1]["afstandLopen"]-25
         }
-
+        console.log(mensenDICT[0],mensenDICT[1])
         if(mensenDICT[nummerID]["afstandGelopen"]!=mensenDICT[nummerID]["afstandLopen"]){
-        
-
-        if(instructie[0]>0 && instructie[1]==0){
-            naam.style.left=Number(naam.style.left.replace("px",""))+1
-            instructie[0]-=1
-            naam.style.transform= "rotate(90deg)"
-        }else if (instructie[0]<0 && instructie[1]==0){
-            naam.style.left=Number(naam.style.left.replace("px",""))-1
-            instructie[0]+=1
-            naam.style.transform= "rotate(90deg)"
-        }else if (instructie[0]==0 && instructie[1]>0){
-            naam.style.top=Number(naam.style.top.replace("px",""))+1
-            instructie[1]-=1
-            naam.style.transform= "rotate(180deg)"
-        }else if (instructie[0]==0 && instructie[1]<0){
-            naam.style.top=Number(naam.style.top.replace("px",""))-1
-            instructie[1]+=1
-            naam.style.transform= "rotate(180deg)"
-        }
-
+            if(instructie[0]>0 && instructie[1]==0){
+                naam.style.left=Number(naam.style.left.replace("px",""))+1
+                instructie[0]-=1
+                naam.style.transform= "rotate(90deg)"
+            }else if (instructie[0]<0 && instructie[1]==0){
+                naam.style.left=Number(naam.style.left.replace("px",""))-1
+                instructie[0]+=1
+                naam.style.transform= "rotate(90deg)"
+            }else if (instructie[0]==0 && instructie[1]>0){
+                naam.style.top=Number(naam.style.top.replace("px",""))+1
+                instructie[1]-=1
+                naam.style.transform= "rotate(180deg)"
+            }else if (instructie[0]==0 && instructie[1]<0){
+                naam.style.top=Number(naam.style.top.replace("px",""))-1
+                instructie[1]+=1
+                naam.style.transform= "rotate(180deg)"
+            }
         mensenDICT[nummerID]["afstandGelopen"]+=1
     }
         
 
         if(instructie[0]==0 && instructie[1]==0){
             wachtrijInstructies.shift()
-            delete mensen[id]
+
         }
         if (wachtrijInstructies.length==0){
+            delete mensenDICT[nummerID]
             mensen.removeChild(naam)
             clearInterval(walkLoop[id])
         }
