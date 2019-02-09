@@ -41,7 +41,7 @@ body{
     position: relative;
 }
 #speelveld{
-    margin:100 auto;
+    margin:100 auto 0 auto;
     width: 500px;
     height: 500px ;
     background-color:rgb(255, 255, 255);
@@ -58,3 +58,16 @@ body{
 ::-webkit-scrollbar{ 
     width: 0px
   }
+
+.controlPanal{
+    margin:0 auto;
+    width: 500px;
+    height: 100px ;
+    background-color:rgb(112, 112, 112);
+}
+.controlPanal .button{
+    position: relative;
+    top:20px;
+    background-color: yellow
+
+}
