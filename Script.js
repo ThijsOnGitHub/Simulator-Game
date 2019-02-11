@@ -56,7 +56,6 @@ function TheGame(){
             mensenDICT[id]["afstandLopen"]=mensenDICT[id-1]["afstandLopen"]-25
         }
         mensenDICT[id]["afstandGelopen"]=0
-
         mensen.appendChild(persoon)
         walk(persoon,naam,wachtrijInstructies,id)
     }
